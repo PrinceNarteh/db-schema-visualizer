@@ -7,11 +7,16 @@ import ReactFlow, {
 } from "reactflow";
 import { getSchemaInfo } from "./utils";
 import { schema } from "./schema";
+import "reactflow/dist/style.css";
 
-const models = getSchemaInfo(schema);
-console.log({ models });
+const { models } = getSchemaInfo(schema);
 
-const nodes: Node[] = [];
+const nodes: Node[] = models.map((model) => ({
+  id: model.name,
+  position: { x: 0, y: 0 },
+  data: model,
+}));
+
 const edges: Edge[] = [];
 
 const SchemaVisualizer = () => {
