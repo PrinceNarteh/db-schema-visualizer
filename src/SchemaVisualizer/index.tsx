@@ -10,16 +10,52 @@ import { getSchemaInfo } from "./utils";
 import { schema } from "./schema";
 import ModelNode from "./ModelNode";
 
-const { models } = getSchemaInfo(schema);
+const { models, connections } = getSchemaInfo(schema);
 
-const nodes: Node[] = models.map((model) => ({
-  id: model.name,
-  position: { x: 0, y: 0 },
-  data: model,
-  type: "model",
-}));
+let rows = 0;
+let columns = 0;
+let numOfGrid = 1;
+let numOfModels = models.length;
+let columnWidth = 300;
 
-const edges: Edge[] = [];
+while (1) {
+  if (numOfGrid ** 2 >= numOfModels) {
+    break;
+  }
+  numOfGrid++;
+}
+
+const nodes: Node[] = models.map((model, idx) => {
+  const x = rows * columnWidth;
+  const y = columns * columnWidth;
+
+  if (numOfGrid % idx === 0) {
+    columns = 0;
+    rows += 1;
+  } else {
+    columns += 1;
+  }
+
+  return {
+    id: model.name,
+    data: model,
+    type: "model",
+    position: { x, y },
+  };
+});
+
+const edges: Edge[] = connections.map((connection) => {
+  const sourceId = `${connection.source}->${connection.target}`;
+  return {
+    id: sourceId,
+    source: connection.source,
+    target: connection.target,
+    sourceHandle: ourceId,
+    targetHandle: connection.target,
+    animated: true,
+  };
+});
+console.log({ edges });
 
 const nodeTypes = {
   model: ModelNode,

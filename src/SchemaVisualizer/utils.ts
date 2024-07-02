@@ -21,15 +21,15 @@ export const getSchemaInfo = (
   });
 
   const connections: ModelConnection[] = [];
-  parsedModels.forEach((parsedModel) => {
-    parsedModel.fields.forEach((field) => {
+  parsedModels.forEach((model) => {
+    model.fields.forEach((field) => {
       const connection = modelNames?.find((modelName) =>
         field?.type?.includes(modelName),
       );
       if (connection) {
         connections.push({
           name: field.name,
-          source: parsedModel.name,
+          source: model.name,
           target: connection,
         });
       }

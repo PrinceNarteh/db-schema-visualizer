@@ -14,14 +14,11 @@ export default function ModelNode({ data }: NodeProps<Model>) {
       </div>
       {data.fields.map(({ type, name, hasConnections }, index) => (
         <div
+          key={index}
           className={`flex justify-between p-1 text-white ${index % 2 === 0 ? "bg-[#282828]" : "bg-[#232323]"}`}
         >
-          <p>
-            <pre>{name}</pre>
-          </p>
-          <p>
-            <pre>{type}</pre>
-          </p>
+          <pre>{name}</pre>
+          <pre>{type}</pre>
           {hasConnections && (
             <Handle
               position={Position.Right}
