@@ -1,4 +1,4 @@
-export const Schema = `
+export const schema = `
   model User {
     id: number;
     name: string;

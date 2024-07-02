@@ -5,6 +5,11 @@ import ReactFlow, {
   Node,
   Edge,
 } from "reactflow";
+import { getSchemaInfo } from "./utils";
+import { schema } from "./schema";
+
+const models = getSchemaInfo(schema);
+console.log({ models });
 
 const nodes: Node[] = [];
 const edges: Edge[] = [];

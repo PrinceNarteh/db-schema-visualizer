@@ -1,11 +1,13 @@
+export type Field = {
+  name: string;
+  type: string;
+  hasConnection?: boolean;
+};
+
 export type Model = {
   name: string;
-  fields: {
-    name: string;
-    type: string;
-    hasConnection: boolean;
-  }[];
-  isChild: boolean;
+  fields: Field[];
+  isChild?: boolean;
 };
 
 export type ModelConnection = {
