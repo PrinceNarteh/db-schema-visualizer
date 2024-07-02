@@ -1,6 +1,8 @@
-import { Model } from "../types";
+import { Model, ModelConnection } from "../types";
 
-export const getSchemaInfo = (schema: string): { models: Model[] } => {
+export const getSchemaInfo = (
+  schema: string,
+): { models: Model[]; connections: ModelConnection[] } => {
   const modelStrings = Array.from(
     schema.matchAll(/model \w+\s?{[\w:\s;\[\]]+}/g),
   ).map((item) => item[0]);
@@ -18,6 +20,22 @@ export const getSchemaInfo = (schema: string): { models: Model[] } => {
     };
   });
 
+  const connections: ModelConnection[] = [];
+  parsedModels.forEach((parsedModel) => {
+    parsedModel.fields.forEach((field) => {
+      const connection = modelNames?.find((modelName) =>
+        field?.type?.includes(modelName),
+      );
+      if (connection) {
+        connections.push({
+          name: field.name,
+          source: parsedModel.name,
+          target: connection,
+        });
+      }
+    });
+  });
+
   return {
     models: parsedModels.map((model) => ({
       ...model,
@@ -25,5 +43,6 @@ export const getSchemaInfo = (schema: string): { models: Model[] } => {
         parsedModel.fields.find((field) => field.type?.includes(model.name)),
       ),
     })),
+    connections,
   };
 };
