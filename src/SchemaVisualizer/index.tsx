@@ -5,9 +5,10 @@ import ReactFlow, {
   Node,
   Edge,
 } from "reactflow";
+import "reactflow/dist/style.css";
 import { getSchemaInfo } from "./utils";
 import { schema } from "./schema";
-import "reactflow/dist/style.css";
+import ModelNode from "./ModelNode";
 
 const { models } = getSchemaInfo(schema);
 
@@ -15,17 +16,23 @@ const nodes: Node[] = models.map((model) => ({
   id: model.name,
   position: { x: 0, y: 0 },
   data: model,
+  type: "model",
 }));
 
 const edges: Edge[] = [];
+
+const nodeTypes = {
+  model: ModelNode,
+};
 
 const SchemaVisualizer = () => {
   return (
     <div className="w-full h-screen bg-gray-800">
       <ReactFlow
+        fitView
         defaultNodes={nodes}
         defaultEdges={edges}
-        fitView
+        nodeTypes={nodeTypes}
         fitViewOptions={{ padding: 0.4 }}
       >
         <Controls />
