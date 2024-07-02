@@ -1,14 +1,7 @@
-import ReactFlow, { Background, BackgroundVariant, Controls } from "reactflow";
+import SchemaVisualizer from "./SchemaVisualizer";
 
 function App() {
-  return (
-    <div className="w-full h-screen bg-gray-800">
-      <ReactFlow>
-        <Controls />
-        <Background color="#222" variant={BackgroundVariant.Lines} />
-      </ReactFlow>
-    </div>
-  );
+  return <SchemaVisualizer />;
 }
 
 export default App;
